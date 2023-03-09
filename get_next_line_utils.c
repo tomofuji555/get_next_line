@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/04 23:53:44 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/04 23:53:44 by marvin           ###   ########.fr       */
+/*   Created: 2023/03/09 17:18:12 by tofujiwa          #+#    #+#             */
+/*   Updated: 2023/03/09 17:18:12 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,24 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		str[j++] = s2[i++];
 	str[j] = '\0';
 	return (str);
+}
+
+char	*ft_strdup(const char *src)
+{
+	size_t	i;
+	char	*a;
+
+	i = 0;
+	a = ((char *)malloc(ft_strlen(src) * sizeof(char) + 1));
+	if (!a)
+		return (NULL);
+	while (src[i] != '\0')
+	{
+		a[i] = src[i];
+		i++;
+	}
+	a[i] = '\0';
+	return (a);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)

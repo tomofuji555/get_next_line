@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tofujiwa <tofujiwa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/04 23:56:40 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/04 23:56:40 by marvin           ###   ########.fr       */
+/*   Created: 2023/03/09 17:18:20 by tofujiwa          #+#    #+#             */
+/*   Updated: 2023/03/09 17:18:20 by tofujiwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 size_t	ft_strlen (const char *str);
 char	*ft_strchr(char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
+<<<<<<< HEAD
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+=======
+char	*ft_strdup(const char *src);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*get_next_line(int fd);
+>>>>>>> refs/remotes/origin/main
 
 #endif
