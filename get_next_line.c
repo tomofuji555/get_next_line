@@ -16,7 +16,7 @@ static char	*free_null(char *buf)
 {
     while (*buf)
     {
-        *buf = 0;
+        *buf = '\0';
         buf++;
     }
     return (NULL);
@@ -25,6 +25,7 @@ static char	*free_null(char *buf)
 static char	*get_store(char *save, int fd)
 {
     char    *buf;
+    char    *temp;
     int     size;
 
     buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
@@ -34,15 +35,16 @@ static char	*get_store(char *save, int fd)
     {
         size = read (fd, buf, BUFFER_SIZE); //bufにreadしたものが保存されている
         if (size == 0)
-            return (NULL);
-        if (size == -1)
             break;
-        buf[size] = '\0';
-        save = ft_strjoin (save, buf);//saveにbufをくっつけ、それをsaveに保存
-        free (buf);
+        if (size == -1)
+            return (free_null (buf));
+        temp = ft_strjoin (save, buf); //saveにbufをくっつけ、それをsaveに保存
+        if (!temp)
+            return (free_null (buf));
+        free_null (save);
+        save = temp;
     }
-    if (size == -1)
-        return (free_null (buf));
+    free_null (buf);
     return (save);
 }
 
@@ -50,16 +52,20 @@ static char	*put_line(char *save)
 {
     size_t  count;
     char    *line;
+    char    *temp;
 
+    if (!save)
+        return (NULL);
     count = 0;
-    while (save[count] && save[count] != 'n')
+    while (save[count] && save[count] != '\n')
         count++;
-    if (save[count] == 'n')
+    if (save[count] == '\n')
         count++;
-    line = ft_substr (save, 0, count + 1);
-    if (!line)
+    temp = ft_substr (save, 0, count);
+    if (!temp)
         return (free_null(save));
-    line[count + 1] = '\0';
+    line = temp;
+    free_null (temp);
     return (line);
 }
 
@@ -67,19 +73,19 @@ static char	*save_prepare(char *save)
 {
     size_t  max;
     size_t  count;
-    char    *save;
+    char    *temp;
 
+    if (!save)
+        return (NULL);
     count = 0;
     max = ft_strlen (save);
-    save += 1;
-    while (save[count] && save[count] != 'n')
+    while (save[count] && save[count] != '\n')
         count++;
-    if (save[count] == 'n')
+    if (save[count] == '\n')
         count++;
-    save = ft_substr (save, count, max - count + 1);
-    if (!save)
+    save = ft_substr (save, count, max - count);
+    if (!temp)
         return (free_null (save));
-    save[max - count] = '\0';
     return (save);
 }
 
