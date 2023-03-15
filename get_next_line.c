@@ -38,11 +38,9 @@ static char	*get_store(char *save, int fd)
             break;
         if (size == -1)
             return (free_null (buf));
-        temp = ft_strjoin (save, buf); //saveにbufをくっつけ、それをsaveに保存
-        if (!temp)
+        save = ft_strjoin (save, buf); //saveにbufをくっつけ、それをsaveに保存
+        if (!save)
             return (free_null (buf));
-        free_null (save);
-        save = temp;
     }
     free_null (buf);
     return (save);
@@ -52,7 +50,6 @@ static char	*put_line(char *save)
 {
     size_t  count;
     char    *line;
-    char    *temp;
 
     if (!save)
         return (NULL);
@@ -61,11 +58,9 @@ static char	*put_line(char *save)
         count++;
     if (save[count] == '\n')
         count++;
-    temp = ft_substr (save, 0, count);
-    if (!temp)
+    line = ft_substr (save, 0, count);
+    if (!line)
         return (free_null(save));
-    line = temp;
-    free_null (temp);
     return (line);
 }
 
@@ -84,7 +79,7 @@ static char	*save_prepare(char *save)
     if (save[count] == '\n')
         count++;
     save = ft_substr (save, count, max - count);
-    if (!temp)
+    if (!save)
         return (free_null (save));
     return (save);
 }
