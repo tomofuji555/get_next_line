@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <fcntl.h>
+#include <stdio.h>
 
 static char	*free_null(char *buf)
 {
@@ -22,10 +24,9 @@ static char	*free_null(char *buf)
     return (NULL);
 }
 
-static char	*get_store(char *save, int fd)
+static char	*get_read(char *save, int fd)
 {
     char    *buf;
-    char    *temp;
     int     size;
 
     buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
@@ -38,17 +39,16 @@ static char	*get_store(char *save, int fd)
             break;
         if (size == -1)
             return (free_null (buf));
+        buf [size] = '\0';
         save = ft_strjoin (save, buf); //saveにbufをくっつけ、それをsaveに保存
-        if (!save)
-            return (free_null (buf));
     }
-    free_null (buf);
+    free(buf);
     return (save);
 }
 
 static char	*put_line(char *save)
 {
-    size_t  count;
+    int     count;
     char    *line;
 
     if (!save)
@@ -66,8 +66,8 @@ static char	*put_line(char *save)
 
 static char	*save_prepare(char *save)
 {
-    size_t  max;
-    size_t  count;
+    int  max;
+    int  count;
     char    *temp;
 
     if (!save)
@@ -78,10 +78,11 @@ static char	*save_prepare(char *save)
         count++;
     if (save[count] == '\n')
         count++;
-    save = ft_substr (save, count, max - count);
-    if (!save)
+    temp = ft_substr (save, count, max - count);
+    if (!temp)
         return (free_null (save));
-    return (save);
+    free (save);
+    return (temp);
 }
 
 char	*get_next_line(int fd)
@@ -91,10 +92,27 @@ char	*get_next_line(int fd)
 
     if (fd < 0 || BUFFER_SIZE <= 0)
         return (NULL);
-    save = get_store (fd, save);//BUFFER_SIZEをreadする&&saveに保存
+    save = get_read (save, fd);//BUFFER_SIZEをreadする&&saveに保存
     if (!save)
         return (NULL);
     line = put_line(save); //出力するもの
     save = save_prepare(save); //前のsaveを預かる
     return (line);
+}
+
+int	main(void)
+{
+	int		fd;
+	char	*line;
+
+	line = "";
+	fd = open("abc.txt", O_RDONLY);
+	while (line)
+	{
+		line = get_next_line(fd);
+		printf("%s", line);
+		free(line);
+	}
+    close (fd);
+	return (0);
 }
