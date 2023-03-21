@@ -29,20 +29,20 @@ static char	*get_read(char *save, int fd)
     char    *buf;
     int     size;
 
-    buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+    buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1)); //saveに保存するからmallocは一回で大丈夫
     if (!buf)
         return (NULL);
     while (!ft_strchr (save, '\n'))
     {
         size = read (fd, buf, BUFFER_SIZE); //bufにreadしたものが保存されている
         if (size == 0)
-            break;
+            break ;
         if (size == -1)
             return (free_null (buf));
         buf [size] = '\0';
         save = ft_strjoin (save, buf); //saveにbufをくっつけ、それをsaveに保存
     }
-    free(buf);
+    free_null(buf);
     return (save);
 }
 
@@ -61,6 +61,8 @@ static char	*put_line(char *save)
     line = ft_substr (save, 0, count);
     if (!line)
         return (free_null(save));
+    if (*line == 0)
+		return (free_null(line));
     return (line);
 }
 
@@ -79,9 +81,9 @@ static char	*save_prepare(char *save)
     if (save[count] == '\n')
         count++;
     temp = ft_substr (save, count, max - count);
+    free_null (save);
     if (!temp)
-        return (free_null (save));
-    free (save);
+        return (NULL);
     return (temp);
 }
 
