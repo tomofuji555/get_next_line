@@ -57,7 +57,7 @@ static char	*get_read(char *save, int fd)
 
 static char	*put_line(char *save)
 {
-	int		count;
+	size_t	count;
 	char	*line;
 
 	if (!save)
@@ -79,8 +79,8 @@ static char	*put_line(char *save)
 
 static char	*save_prepare(char *save)
 {
-	int		max;
-	int		count;
+	size_t	max;
+	size_t	count;
 	char	*temp;
 
 	if (!save)
