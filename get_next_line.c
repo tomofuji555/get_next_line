@@ -25,7 +25,7 @@ static char	*free_null(char *buf, char *save)
 	if (save)
 	{
 		free (save);
-		buf = NULL;
+		save = NULL;
 	}
 	return (NULL);
 }
@@ -67,8 +67,6 @@ static char	*put_line(char *save)
 		count++;
 	if (save[count] == '\n')
 		count++;
-	if (!ft_strchr(save, '\n'))
-		return (ft_strdup(save));
 	line = ft_substr (save, 0, count);
 	if (!line)
 		return (free_null(line, save));
@@ -115,26 +113,24 @@ char	*get_next_line(int fd)
 
 // __attribute__((destructor))
 // static void destructor(void){
-// 	system("leaks -q gnl");
+// 	system("leaks -q a.out");
 // }
 
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
+int	main(void)
+{
+	int		fd;
+	char	*line;
 
-// 	line = "";
-// 	fd = open("abc.txt", O_RDONLY);
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 	 }
-// 		printf("%zu", (size_t)(-1));
-
-// 	// printf("return %s\n", get_next_line(fd));
-// 	// printf("return %s\n", get_next_line(fd));
-// 	close (fd);
-// 	// system("leaks -q a.out");
-// 	return (0);
-// }
+	line = "";
+	fd = open("abc.txt", O_RDONLY);
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s", line);
+		free(line);
+	}
+	// printf("return %s\n", get_next_line(fd));
+	// printf("return %s\n", get_next_line(fd));
+	close (fd);
+	// system("leaks -q a.out");
+	return (0);
+}
